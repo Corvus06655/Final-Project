@@ -1,0 +1,111 @@
+.pg{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;padding:1rem;
+  background:var(--ink);
+}
+
+/* Animated warehouse/server rack background image using SVG */
+.pg::before{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%,rgba(139,92,246,.18),transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%,rgba(34,211,238,.1),transparent 55%),
+    radial-gradient(ellipse 50% 50% at 10% 60%,rgba(184,255,87,.07),transparent 55%);
+}
+
+/* animated circuit board lines */
+.pg::after{
+  content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(90deg,transparent 90%,rgba(184,255,87,.04) 90%),
+    linear-gradient(transparent 90%,rgba(184,255,87,.04) 90%);
+  background-size:40px 40px;
+  animation:circuitMove 15s linear infinite;
+}
+@keyframes circuitMove{from{background-position:0 0}to{background-position:40px 40px}}
+
+/* Floating data packets */
+.packet{
+  position:absolute;width:2px;border-radius:1px;
+  background:linear-gradient(var(--lime),transparent);
+  animation:packetFall linear infinite;
+  z-index:0;pointer-events:none;
+}
+@keyframes packetFall{
+  0%{transform:translateY(-100px);opacity:0}
+  10%{opacity:.6}
+  90%{opacity:.6}
+  100%{transform:translateY(100vh);opacity:0}
+}
+
+.orb1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(184,255,87,.09) 0%,transparent 65%);top:-150px;left:50%;transform:translateX(-50%);pointer-events:none;z-index:0;animation:pulse 6s ease-in-out infinite}
+.orb2{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.1) 0%,transparent 65%);bottom:0;right:8%;pointer-events:none;z-index:0;animation:pulse 8s ease-in-out 2s infinite}
+.orb3{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.08) 0%,transparent 65%);bottom:30%;left:5%;pointer-events:none;z-index:0;animation:pulse 7s ease-in-out 1s infinite}
+@keyframes pulse{0%,100%{transform:scale(1) translateX(-50%)}50%{transform:scale(1.08) translateX(-50%)}}
+.orb2,.orb3{animation:pulseSimple 7s ease-in-out infinite}
+@keyframes pulseSimple{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+/* Glowing server rack illustration in background */
+.serverBg{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:360px;height:480px;opacity:.07;pointer-events:none;z-index:0;
+}
+
+.card{
+  background:rgba(16,16,28,0.85);border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;padding:2.5rem;width:100%;max-width:420px;
+  position:relative;z-index:1;
+  backdrop-filter:blur(24px);
+  box-shadow:0 0 0 1px rgba(184,255,87,.05),0 40px 80px rgba(0,0,0,.6),0 0 60px rgba(139,92,246,.08);
+  animation:cardRise .6s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes cardRise{from{opacity:0;transform:translateY(30px) scale(.97)}to{opacity:1;transform:none}}
+
+.logo{font-weight:800;font-size:1.2rem;display:flex;align-items:center;gap:.5rem;margin-bottom:.25rem}
+.ldot{width:9px;height:9px;border-radius:50%;background:var(--lime);display:inline-block;animation:pd 2s infinite;box-shadow:0 0 8px rgba(184,255,87,.5)}
+@keyframes pd{0%,100%{box-shadow:0 0 0 0 rgba(184,255,87,.4)}50%{box-shadow:0 0 0 8px rgba(184,255,87,0)}}
+.tagline{color:var(--fog);font-size:.8rem;margin-bottom:1.75rem;font-family:var(--fm)}
+
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:rgba(0,0,0,.3);border-radius:10px;padding:3px;margin-bottom:1.5rem}
+.tab{background:none;border:none;padding:.5rem;border-radius:8px;color:var(--fog);font-family:var(--fd);font-size:.85rem;cursor:pointer;transition:all .2s}
+.tab.on{background:rgba(255,255,255,.07);color:var(--snow);font-weight:600;box-shadow:0 0 20px rgba(184,255,87,.06)}
+
+.fg{margin-bottom:1rem}
+.fg label{display:block;font-size:.68rem;color:var(--fog);margin-bottom:.4rem;font-family:var(--fm);text-transform:uppercase;letter-spacing:.07em}
+.fg input{width:100%;padding:.7rem .875rem;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--rim);color:var(--snow);font-family:var(--fd);font-size:.875rem;outline:none;transition:all .25s}
+.fg input:focus{border-color:var(--lime);box-shadow:0 0 0 3px rgba(184,255,87,.1),0 0 20px rgba(184,255,87,.05)}
+.fg input:focus::placeholder{color:transparent}
+
+.err{background:rgba(244,63,94,.12);border:1px solid rgba(244,63,94,.3);color:var(--rose);font-size:.8rem;padding:.6rem .875rem;border-radius:8px;margin-bottom:1rem;animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+.btn{
+  width:100%;padding:.85rem;border-radius:100px;
+  background:linear-gradient(135deg,var(--lime),#8fff2a);
+  color:var(--ink);border:none;font-family:var(--fd);font-weight:700;font-size:.9rem;
+  cursor:pointer;transition:all .3s;margin-top:.5rem;
+  box-shadow:0 0 30px rgba(184,255,87,.2),0 4px 20px rgba(184,255,87,.15);
+  position:relative;overflow:hidden;
+}
+.btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,.25) 50%,transparent 70%);
+  transform:translateX(-100%);transition:transform .5s ease;
+}
+.btn:hover::after{transform:translateX(100%)}
+.btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 40px rgba(184,255,87,.4),0 0 60px rgba(184,255,87,.15)}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+
+.hint{text-align:center;margin-top:1rem;font-size:.75rem;color:var(--fog)}
+.hint code{font-family:var(--fm);color:var(--lime);font-size:.72rem}
+
+/* Live stats pill at bottom of card */
+.livePill{
+  display:flex;align-items:center;gap:.4rem;justify-content:center;
+  margin-top:1.5rem;padding:.4rem .875rem;
+  background:rgba(184,255,87,.06);border:1px solid rgba(184,255,87,.12);
+  border-radius:100px;font-size:.67rem;font-family:var(--fm);color:var(--fog);
+}
+.liveDot{width:5px;height:5px;border-radius:50%;background:var(--lime);animation:pd 1.5s infinite}
+
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}

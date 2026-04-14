@@ -1,0 +1,75 @@
+.pg{position:relative;overflow:hidden;min-height:100vh}
+
+/* Map grid / coordinate background */
+.pg::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%,rgba(139,92,246,.13),transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 80%,rgba(34,211,238,.07),transparent 55%),
+    radial-gradient(ellipse 40% 40% at 5% 70%,rgba(184,255,87,.05),transparent 55%);
+}
+
+/* animated scanning line */
+.scanLine{
+  position:fixed;left:0;right:0;height:2px;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(184,255,87,.15),transparent);
+  animation:scanDown 6s linear infinite;
+}
+@keyframes scanDown{from{top:-2px}to{top:100vh}}
+
+.layout{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;max-width:1000px;margin:0 auto;padding:3rem 1.5rem 5rem;position:relative;z-index:1}
+
+.h2{font-size:2.1rem;font-weight:800;letter-spacing:-.04em;margin-bottom:1rem;line-height:1.1}
+.intro{color:var(--fog);font-size:.88rem;line-height:1.75;margin-bottom:2rem}
+
+.detail{display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem;font-size:.875rem;transition:all .2s;cursor:default}
+.detail:hover{transform:translateX(4px)}
+.dIcon{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--rim);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;transition:all .2s}
+.detail:hover .dIcon{border-color:var(--lime);background:rgba(184,255,87,.08)}
+
+.statusBox{margin-top:2rem;background:rgba(16,16,28,.7);border:1px solid var(--rim);border-radius:14px;padding:1.25rem;backdrop-filter:blur(12px)}
+.stTitle{font-family:var(--fm);font-size:.68rem;color:var(--fog);margin-bottom:.875rem;letter-spacing:.08em;text-transform:uppercase}
+.stRow{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;padding:.4rem 0;border-bottom:1px solid var(--rim)}
+.stRow:last-child{border-bottom:none}
+.stLabel{color:var(--fog)}
+.stVal{font-family:var(--fm);font-size:.7rem;display:flex;align-items:center;gap:.4rem}
+.stDot{width:6px;height:6px;border-radius:50%;animation:dotPulse 2s infinite}
+@keyframes dotPulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.formBox{
+  background:rgba(16,16,28,.75);border:1px solid var(--rim);border-radius:20px;
+  padding:2rem;backdrop-filter:blur(16px);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1.1rem}
+.fg label{display:block;font-size:.68rem;color:var(--fog);margin-bottom:.42rem;font-family:var(--fm);letter-spacing:.07em;text-transform:uppercase}
+.fg input,.fg textarea,.fg select{
+  width:100%;padding:.68rem .875rem;border-radius:10px;
+  background:rgba(0,0,0,.25);border:1px solid var(--rim);
+  color:var(--snow);font-family:var(--fd);font-size:.875rem;outline:none;
+  transition:all .25s;resize:none;
+}
+.fg input:focus,.fg textarea:focus,.fg select:focus{
+  border-color:var(--lime);box-shadow:0 0 0 3px rgba(184,255,87,.08),0 0 20px rgba(184,255,87,.05);
+}
+.fg textarea{min-height:94px}
+.fg select option{background:var(--ink2)}
+
+.charCount{font-size:.65rem;color:var(--fog);text-align:right;margin-top:.25rem;font-family:var(--fm)}
+
+.submit{
+  width:100%;padding:.85rem;border-radius:100px;
+  background:linear-gradient(135deg,var(--lime),#9dff00);color:var(--ink);border:none;
+  font-family:var(--fd);font-weight:700;font-size:.9rem;cursor:pointer;transition:all .3s;
+  box-shadow:0 0 40px rgba(184,255,87,.15);
+  position:relative;overflow:hidden;
+}
+.submit::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 30%,rgba(255,255,255,.3) 50%,transparent 70%);transform:translateX(-100%);transition:transform .5s}
+.submit:hover::after{transform:translateX(100%)}
+.submit:hover{transform:translateY(-2px);box-shadow:0 12px 50px rgba(184,255,87,.35)}
+.submit.sent{background:linear-gradient(135deg,#06d6a0,#0dd3bb)}
+.submit:disabled{opacity:.6;cursor:not-allowed}
+
+@media(max-width:900px){.layout{grid-template-columns:1fr}}
+@media(max-width:600px){.row2{grid-template-columns:1fr}}
