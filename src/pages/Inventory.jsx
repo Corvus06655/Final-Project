@@ -5,21 +5,21 @@ import s from './Inventory.module.css';
 const EMPTY = { name:'', sku:'', category:'', quantity:0, unit:'units', costPrice:0, sellingPrice:0, reorderPoint:10, reorderQuantity:50, description:'' };
 
 export default function Inventory() {
-  const [inv,       setInv]       = useState([]);
-  const [loading,   setLoading]   = useState(true);
-  const [search,    setSearch]    = useState('');
-  const [catFilter, setCatFilter] = useState('');
-  const [cats,      setCats]      = useState([]);
-  const [showAdd,   setShowAdd]   = useState(false);
-  const [form,      setForm]      = useState(EMPTY);
-  const [busy,      setBusy]      = useState(false);
-  const [toast,     setToast]     = useState('');
-  const [csvFile,   setCsvFile]   = useState(null);
-  const [csvResult, setCsvResult] = useState(null);
-  const [csvBusy,   setCsvBusy]   = useState(false);
-  const [err,       setErr]       = useState('');
+  const [inv,      setInv]      = useState([]);
+  const [loading,  setLoading]  = useState(true);
+  const [search,   setSearch]   = useState('');
+  const [catFilter,setCatFilter]= useState('');
+  const [cats,     setCats]     = useState([]);
+  const [showAdd,  setShowAdd]  = useState(false);
+  const [form,     setForm]     = useState(EMPTY);
+  const [busy,     setBusy]     = useState(false);
+  const [toast,    setToast]    = useState('');
+  const [csvFile,  setCsvFile]  = useState(null);
+  const [csvResult,setCsvResult]= useState(null);
+  const [csvBusy,  setCsvBusy]  = useState(false);
+  const [err,      setErr]      = useState('');
 
-  const showToast = msg => { setToast(msg); setTimeout(()=>setToast(''), 3500); };
+  const showToast = msg => { setToast(msg); setTimeout(()=>setToast(''),3500); };
 
   const load = useCallback(async () => {
     setLoading(true); setErr('');
@@ -28,7 +28,7 @@ export default function Inventory() {
       if (search)    params.search   = search;
       if (catFilter) params.category = catFilter;
       const [ir, cr] = await Promise.all([
-        apiGetInventory({ ...params, limit: 200 }),
+        apiGetInventory({ ...params, limit:200 }),
         apiGetCategories(),
       ]);
       setInv(ir.inventory || []);
@@ -47,11 +47,11 @@ export default function Inventory() {
     try {
       await apiCreateItem({
         ...form,
-        quantity:        +form.quantity,
-        costPrice:       +form.costPrice,
-        sellingPrice:    +form.sellingPrice,
-        reorderPoint:    +form.reorderPoint,
-        reorderQuantity: +form.reorderQuantity,
+        quantity:       +form.quantity,
+        costPrice:      +form.costPrice,
+        sellingPrice:   +form.sellingPrice,
+        reorderPoint:   +form.reorderPoint,
+        reorderQuantity:+form.reorderQuantity,
       });
       showToast('✓ Product added successfully!');
       setShowAdd(false);
@@ -85,11 +85,6 @@ export default function Inventory() {
   const statusClass = st => st==='in_stock'?s.sok:st==='low_stock'?s.swn:s.scr;
   const statusLabel = st => st==='in_stock'?'● In Stock':st==='low_stock'?'⚠ Low Stock':'✕ Out of Stock';
 
-  // Compute stats
-  const inStock   = inv.filter(p=>p.stockStatus==='in_stock').length;
-  const lowStock  = inv.filter(p=>p.stockStatus==='low_stock').length;
-  const outStock  = inv.filter(p=>p.stockStatus==='out_of_stock').length;
-
   return (
     <div className={`pg ${s.pg}`}>
       {toast && <div className={s.toast}>{toast}</div>}
@@ -98,10 +93,7 @@ export default function Inventory() {
         <div className={s.headerIn}>
           <div>
             <h1 className={s.hl}>Inventory Management</h1>
-            <p className={s.sub}>
-              <span className={s.liveDot}/>
-              {inv.length} products · connected to MongoDB
-            </p>
+            <p className={s.sub}>{inv.length} products · connected to MongoDB</p>
           </div>
           <div className={s.headerBtns}>
             <button className={s.addBtn} onClick={()=>setShowAdd(true)}>+ Add Product</button>
@@ -110,18 +102,6 @@ export default function Inventory() {
       </div>
 
       <div className={s.body}>
-
-        {/* Live stats pills */}
-        {!loading && inv.length > 0 && (
-          <div className={s.statsRow}>
-            <div className={s.statPill}><span className={s.statDot} style={{background:'var(--lime)'}}/>In Stock: <strong style={{color:'var(--snow)'}}>{inStock}</strong></div>
-            <div className={s.statPill}><span className={s.statDot} style={{background:'var(--amber)'}}/>Low Stock: <strong style={{color:'var(--amber)'}}>{lowStock}</strong></div>
-            <div className={s.statPill}><span className={s.statDot} style={{background:'var(--rose)'}}/>Out of Stock: <strong style={{color:'var(--rose)'}}>{outStock}</strong></div>
-            <div className={s.statPill} style={{marginLeft:'auto'}}>
-              <span style={{color:'var(--fog)'}}>Total SKUs:</span> <strong style={{color:'var(--snow)'}}>{inv.length}</strong>
-            </div>
-          </div>
-        )}
 
         {/* CSV Import Card */}
         <div className={s.csvCard}>
@@ -144,7 +124,7 @@ export default function Inventory() {
               href="data:text/csv,name,sku,category,quantity,unit,costPrice,sellingPrice,reorderPoint,reorderQuantity,description%0AWireless Earbuds Pro,WEP-001,Electronics,120,units,45,75,30,80,Sample product"
               download="sample-inventory.csv"
               className={s.sampleLink}
-            >↓ Download Sample</a>
+            >Download Sample</a>
           </div>
           {csvResult && (
             <div className={s.csvResult}>
@@ -156,17 +136,19 @@ export default function Inventory() {
 
         {/* Filters */}
         <div className={s.filters}>
-          <input className={s.searchIn} type="text" placeholder="🔍  Search products or SKU…" value={search} onChange={e=>setSearch(e.target.value)}/>
+          <input className={s.searchIn} type="text" placeholder="Search products or SKU…" value={search} onChange={e=>setSearch(e.target.value)}/>
           <select className={s.catSel} value={catFilter} onChange={e=>setCatFilter(e.target.value)}>
             <option value="">All Categories</option>
             {cats.map(c=><option key={c} value={c}>{c}</option>)}
           </select>
         </div>
 
+        {/* Error */}
         {err && <div className={s.errBox}>⚠️ {err} — make sure backend is running on port 5001</div>}
 
+        {/* Table */}
         {loading
-          ? <div className={s.loadRow}><div className={s.spinner}/> Loading inventory…</div>
+          ? <div className={s.loadRow}><div className={s.spinner}/> Loading…</div>
           : (
           <div style={{overflowX:'auto'}}>
             <table className={s.tbl}>
@@ -174,19 +156,19 @@ export default function Inventory() {
                 <tr><th>Product</th><th>SKU</th><th>Category</th><th>Qty</th><th>Unit</th><th>Cost ₹</th><th>Sell ₹</th><th>Reorder</th><th>Status</th><th>Actions</th></tr>
               </thead>
               <tbody>
-                {inv.map((p,i)=>(
-                  <tr key={p._id} style={{animationDelay:`${i*0.03}s`}}>
+                {inv.map(p=>(
+                  <tr key={p._id}>
                     <td style={{fontWeight:500}}>{p.name}</td>
-                    <td className={s.mono} style={{color:'var(--fog)'}}>{p.sku}</td>
+                    <td className={s.mono}>{p.sku}</td>
                     <td style={{fontSize:'.72rem',color:'var(--fog)'}}>{p.category}</td>
-                    <td className={s.mono}><strong>{p.quantity?.toLocaleString()}</strong></td>
+                    <td className={s.mono}><strong>{p.quantity}</strong></td>
                     <td style={{fontSize:'.72rem',color:'var(--fog)'}}>{p.unit}</td>
-                    <td className={s.mono} style={{color:'var(--fog)'}}>₹{p.costPrice}</td>
-                    <td className={s.mono} style={{color:'var(--fog)'}}>₹{p.sellingPrice}</td>
+                    <td className={s.mono}>{p.costPrice}</td>
+                    <td className={s.mono}>{p.sellingPrice}</td>
                     <td className={s.mono} style={{color:'var(--fog)'}}>{p.reorderPoint}</td>
                     <td><span className={`${s.badge} ${statusClass(p.stockStatus)}`}>{statusLabel(p.stockStatus)}</span></td>
                     <td>
-                      <button className={s.delBtn} onClick={()=>handleDelete(p._id, p.name)}>Delete</button>
+                      <button className={s.delBtn} onClick={()=>handleDelete(p._id,p.name)}>Delete</button>
                     </td>
                   </tr>
                 ))}

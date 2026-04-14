@@ -90,7 +90,7 @@ export default function Dashboard() {
           <div className={s.headTop}>
             <div>
               <div className={s.hl}>Analytics Dashboard</div>
-              <div className={s.sub}><span className={s.liveDot}/> Live data from MongoDB · PredictiveSys v2.4</div>
+              <div className={s.sub}>Live data from MongoDB · PredictiveSys v2.4</div>
             </div>
             <button className={s.refreshBtn} onClick={load}>↻ Refresh</button>
           </div>
