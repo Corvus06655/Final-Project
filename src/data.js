@@ -29,8 +29,8 @@ export const FLOAT_CARDS = [
   {name:"Coffee Reserve",   sku:"OCB-205",stock:740,st:"ok",l:670,delay:5,dur:9},
 ];
 export const TEAM = [
-  {nm:"Mayank Srivastava",rl:"ML Engineer",   av:"MS",g:"linear-gradient(135deg,#8b5cf6,#22d3ee)"},
-  {nm:"Bhupendra Singh", rl:"Full-Stack Dev",av:"BS",g:"linear-gradient(135deg,#b8ff57,#22d3ee)"},
+  {nm:"Mayank Srivastava",rl:"Frontend Dev",   av:"MS",g:"linear-gradient(135deg,#8b5cf6,#22d3ee)"},
+  {nm:"Bhupendra Singh", rl:"Frontend Dev",av:"BS",g:"linear-gradient(135deg,#b8ff57,#22d3ee)"},
   {nm:"Sarthak", rl:"Backend Dev",   av:"S",g:"linear-gradient(135deg,#f43f5e,#f59e0b)"},
-  {nm:"Rishab Singh",  rl:"UI/UX Designer",av:"RS",g:"linear-gradient(135deg,#f59e0b,#f43f5e)"},
+  {nm:"Rishab Singh",  rl:"Backend Dev",av:"RS",g:"linear-gradient(135deg,#f59e0b,#f43f5e)"},
 ];
